@@ -1,43 +1,77 @@
-# Cloud Computing Project Roadmap
+# Project 2 — S3 Static Website
 
-Personal project roadmap documenting my journey learning AWS cloud infrastructure.
-All infrastructure is written in Terraform and deployed on AWS Free Tier.
-
-**Built by:** Teng Lee | CS Student 
-**GitHub:** [TGLEE4](https://github.com/TGLEE4)
-
----
-
-## Projects
-
-### ✅ Project 1 — AWS Account Hardening
-Secured a fresh AWS account with root MFA, IAM admin user, and Terraform-managed billing alerts.
-
-**Services:** IAM, CloudWatch, SNS
-**Tools:** Terraform, AWS CLI
-
----
-
-### ✅ Project 2 — S3 Static Website
-Deployed a personal portfolio site to AWS S3 with public access policies and static website hosting.
+Deployed a personal portfolio site to AWS S3 with public access policies 
+and static website hosting — all infrastructure provisioned with Terraform.
 
 **Live Site:** http://teng-lee-portfolio.s3-website-us-east-1.amazonaws.com
-**Services:** S3
-**Tools:** Terraform, AWS CLI, HTML
 
 ---
 
-## Skills Demonstrated
-- Infrastructure as Code (Terraform)
-- AWS IAM and security best practices
-- S3 bucket creation and policy management
-- Static website hosting on AWS
-- Git and GitHub version control
+## What This Project Does
+
+- Creates an S3 bucket on AWS
+- Enables static website hosting
+- Configures public access policy so anyone can visit the site
+- Outputs the live URL after deployment
 
 ---
 
-## Tools & Environment
-- Ubuntu 24.04
-- Terraform v1.15.3
-- AWS CLI
-- Git 2.43.0
+## Infrastructure
+
+| File | Purpose |
+|---|---|
+| `main.tf` | S3 bucket, website hosting, public access policy |
+| `variables.tf` | Bucket name variable |
+| `outputs.tf` | Website URL output |
+| `index.html` | Portfolio page content |
+
+---
+
+## How It Works
+
+S3 normally keeps all files private by default. To host a public 
+website I had to do three things in order:
+
+1. Create the bucket
+2. Remove the public access block that AWS enables by default
+3. Attach a bucket policy that grants read access to everyone
+
+The order matters — attaching the policy before removing the 
+access block will fail. Terraform handles this automatically 
+using `depends_on`.
+
+## What I Learned
+
+- S3 bucket policies use JSON to define who can access what
+- AWS blocks public access by default and requires explicit opt-in
+- Terraform `depends_on` controls the order resources are created
+- Static website hosting and object storage are two different S3 modes
+- Infrastructure as Code means the entire setup is reproducible 
+  by running three commands
+
+---
+
+## Services & Tools
+
+- **AWS:** S3
+- **IaC:** Terraform
+- **CLI:** AWS CLI
+- **OS:** Ubuntu 24.04
+
+---
+
+## How To Deploy
+
+```bash
+terraform init
+terraform plan
+terraform apply
+aws s3 cp index.html s3://teng-lee-portfolio/index.html
+```
+
+---
+
+## Author
+
+Teng Lee | CS Student
+[github.com/TGLEE4](https://github.com/TGLEE4)
