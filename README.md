@@ -3,7 +3,7 @@
 Deployed a personal portfolio site to AWS S3 with public access policies 
 and static website hosting — all infrastructure provisioned with Terraform.
 
-**Live Site:** http://teng-lee-portfolio.s3-website-us-east-1.amazonaws.com
+[Live site](http://teng-lee-portfolio.s3-website-us-east-1.amazonaws.com)
 
 ---
 
